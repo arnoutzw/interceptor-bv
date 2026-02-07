@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTERCEPTOR | FPV Drone Systemen voor Defensie</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --dark: #1a1a1a;
+            --gray-900: #222222;
+            --gray-700: #444444;
+            --gray-500: #6b6b6b;
+            --gray-400: #999999;
+            --gray-200: #e5e5e5;
+            --gray-100: #f5f5f5;
+            --white: #ffffff;
+            --accent: #4ade80;
+            --accent-dark: #22c55e;
+            --orange: #f97316;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--black);
+            background: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ====== TOP BAR ====== */
+        .top-bar {
+            background: var(--black);
+            color: var(--gray-400);
+            font-size: 0.8rem;
+            padding: 8px 0;
+            letter-spacing: 0.02em;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .top-bar a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .top-bar a:hover {
+            color: var(--white);
+        }
+
+        /* ====== CONTAINER ====== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ====== NAVIGATION ====== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 16px 0;
+            transition: all 0.3s;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: -0.03em;
+            color: var(--black);
+            text-decoration: none;
+        }
+
+        .logo span {
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--black);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gray-500);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--gray-700);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--black);
+            border: 1.5px solid var(--gray-200);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--black);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline-light {
+            background: transparent;
+            color: var(--white);
+            border: 1.5px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-outline-light:hover {
+            border-color: var(--white);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-white:hover {
+            background: var(--gray-100);
+            transform: translateY(-1px);
+        }
+
+        .btn-nav {
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+
+        /* ====== HERO ====== */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(249,115,22,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 32px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            color: var(--black);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--gray-500);
+            max-width: 640px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ====== IMAGE BAND ====== */
+        .image-band {
+            width: 100%;
+            height: 480px;
+            position: relative;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        .image-band-content {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,
+                #0a0a0a 0%,
+                #1a1a2e 25%,
+                #16213e 50%,
+                #0f3460 75%,
+                #1a1a2e 100%
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-band-content::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px),
+                repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px);
+        }
+
+        .image-band-content::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 60%);
+        }
+
+        .drone-visual {
+            position: relative;
+            z-index: 1;
+        }
+
+        .drone-visual svg {
+            width: 320px;
+            height: 320px;
+            opacity: 0.9;
+        }
+
+        /* ====== SECTION STYLES ====== */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--gray-500);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ====== SERVICES GRID ====== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--gray-100);
+            border-radius: 16px;
+            padding: 40px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .service-card p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .feature-list li::before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2322c55e'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .card-buttons .btn {
+            padding: 10px 22px;
+            font-size: 0.85rem;
+        }
+
+        /* ====== SPECS GRID ====== */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .spec-card {
+            background: var(--gray-100);
+            border-radius: 16px;
+            padding: 36px;
+            transition: transform 0.3s;
+        }
+
+        .spec-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .spec-card.wide {
+            grid-column: span 2;
+        }
+
+        .spec-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 18px;
+        }
+
+        .spec-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .spec-card p {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
+        /* ====== STATS ====== */
+        .stats-section {
+            background: var(--gray-100);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 48px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--black) 0%, var(--gray-700) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-item p {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* ====== ABOUT ====== */
+        .about-text {
+            max-width: 720px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-text p {
+            color: var(--gray-500);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        /* ====== IMAGE BAND 2 ====== */
+        .image-band-2 {
+            height: 400px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #334155 70%, #1e293b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-band-2::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px),
+                repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px);
+        }
+
+        .image-band-2::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 60%);
+        }
+
+        /* ====== PRODUCTS ====== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .product-card {
+            background: var(--gray-100);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+        }
+
+        .product-card-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gray-100) 0%, #e8e8e8 100%);
+            position: relative;
+        }
+
+        .product-card-image svg {
+            width: 80px;
+            height: 80px;
+            opacity: 0.25;
+        }
+
+        .product-card-body {
+            padding: 28px;
+        }
+
+        .product-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .product-card p {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ====== CTA SECTION ====== */
+        .cta-section {
+            background: linear-gradient(180deg, var(--gray-900) 0%, var(--black) 100%);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .cta-section p {
+            color: var(--gray-400);
+            font-size: 1.1rem;
+            max-width: 560px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ====== FOOTER ====== */
+        .footer {
+            background: var(--black);
+            padding: 80px 0 32px;
+            color: var(--gray-400);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        .footer-brand .logo {
+            color: var(--white);
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--gray-400);
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul a {
+            color: var(--gray-400);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .footer-bottom a {
+            color: var(--gray-400);
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--white);
+        }
+
+        /* ====== MOBILE NAV ====== */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--black);
+            margin: 6px 0;
+            transition: 0.3s;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1024px) {
+            .specs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .spec-card.wide {
+                grid-column: span 1;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+            .footer-grid {
+                grid-template-columns: 1.5fr 1fr 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 24px;
+                gap: 16px;
+                border-bottom: 1px solid var(--gray-200);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero {
+                padding: 80px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .image-band {
+                height: 300px;
+            }
+
+            .services-grid,
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+
+        /* ====== SCROLL ANIMATIONS ====== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ====== NATO CLASSIFICATION BADGE ====== */
+        .nato-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(249, 115, 22, 0.08);
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--orange);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="container">
+            <span>Interceptor Aerospace B.V.</span>
+            <a href="mailto:info@interceptor-aero.nl">info@interceptor-aero.nl</a>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">INTERCEPTOR</a>
+            <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#systemen">Systemen</a></li>
+                <li><a href="#specificaties">Specificaties</a></li>
+                <li><a href="#over-ons">Over ons</a></li>
+                <li><a href="#projecten">Projecten</a></li>
+                <li><a href="#contact" class="btn btn-primary btn-nav">Neem contact op</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge fade-up">
+                <span class="dot"></span>
+                NAVO-compatibel &middot; Ontwikkeld in Nederland
+            </div>
+            <h1 class="fade-up">Bescherm het luchtruim.<br>Neutraliseer de dreiging.</h1>
+            <p class="fade-up">Van detectie tot onderschepping — onze FPV-dronesystemen bieden de Nederlandse Defensie een beslissend voordeel tegen vijandelijke UAS-dreigingen. Snel, precies en kosteneffectief.</p>
+            <div class="hero-buttons fade-up">
+                <a href="#systemen" class="btn btn-primary">Ontdek onze systemen</a>
+                <a href="#contact" class="btn btn-outline">Vraag een demo aan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMAGE BAND 1 -->
+    <div class="image-band">
+        <div class="image-band-content">
+            <div class="drone-visual">
+                <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Drone body -->
+                    <ellipse cx="160" cy="160" rx="32" ry="12" fill="rgba(255,255,255,0.15)"/>
+                    <!-- Arms -->
+                    <line x1="140" y1="155" x2="70" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="180" y1="155" x2="250" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="140" y1="165" x2="70" y2="220" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="180" y1="165" x2="250" y2="220" stroke="rgba(255,255,255,0.2)" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Props -->
+                    <circle cx="70" cy="100" r="30" stroke="rgba(249,115,22,0.3)" stroke-width="1.5" fill="none"/>
+                    <circle cx="250" cy="100" r="30" stroke="rgba(249,115,22,0.3)" stroke-width="1.5" fill="none"/>
+                    <circle cx="70" cy="220" r="30" stroke="rgba(249,115,22,0.3)" stroke-width="1.5" fill="none"/>
+                    <circle cx="250" cy="220" r="30" stroke="rgba(249,115,22,0.3)" stroke-width="1.5" fill="none"/>
+                    <!-- Motors -->
+                    <circle cx="70" cy="100" r="6" fill="rgba(255,255,255,0.2)"/>
+                    <circle cx="250" cy="100" r="6" fill="rgba(255,255,255,0.2)"/>
+                    <circle cx="70" cy="220" r="6" fill="rgba(255,255,255,0.2)"/>
+                    <circle cx="250" cy="220" r="6" fill="rgba(255,255,255,0.2)"/>
+                    <!-- Center camera -->
+                    <circle cx="160" cy="160" r="5" fill="rgba(249,115,22,0.5)"/>
+                    <!-- Crosshair -->
+                    <circle cx="160" cy="160" r="60" stroke="rgba(255,255,255,0.06)" stroke-width="1" fill="none" stroke-dasharray="4 4"/>
+                    <circle cx="160" cy="160" r="100" stroke="rgba(255,255,255,0.03)" stroke-width="1" fill="none" stroke-dasharray="6 6"/>
+                    <line x1="160" y1="90" x2="160" y2="110" stroke="rgba(249,115,22,0.2)" stroke-width="1"/>
+                    <line x1="160" y1="210" x2="160" y2="230" stroke="rgba(249,115,22,0.2)" stroke-width="1"/>
+                    <line x1="90" y1="160" x2="110" y2="160" stroke="rgba(249,115,22,0.2)" stroke-width="1"/>
+                    <line x1="210" y1="160" x2="230" y2="160" stroke="rgba(249,115,22,0.2)" stroke-width="1"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- WAT WIJ DOEN -->
+    <section class="section" id="systemen">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Wat wij doen</h2>
+                <p>Wij ontwikkelen geïntegreerde FPV-onderscheppingssystemen voor de bescherming van kritieke infrastructuur, militaire bases en operatiegebieden.</p>
+            </div>
+            <div class="services-grid">
+                <!-- Card 1 -->
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="8" y="20" width="32" height="16" rx="3" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M16 20V14a8 8 0 0116 0v6" stroke="currentColor" stroke-width="2.5"/>
+                        <circle cx="24" cy="28" r="3" fill="currentColor"/>
+                    </svg>
+                    <h3>Counter-UAS Interceptie</h3>
+                    <p>Autonome en piloot-gestuurde FPV-drones die vijandige UAS-dreigingen detecteren, volgen en neutraliseren — van consumentendrones tot militaire verkenningssystemen.</p>
+                    <ul class="feature-list">
+                        <li>Kinetic kill tot 180 km/u</li>
+                        <li>AI-gestuurde doelherkenning</li>
+                        <li>Operationeel bij windkracht 7</li>
+                        <li>Dag- en nachtcapaciteit</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag">Landmacht</span>
+                        <span class="tag">Luchtmacht</span>
+                        <span class="tag">KMar</span>
+                    </div>
+                    <div class="card-buttons">
+                        <a href="#contact" class="btn btn-primary">Neem contact op</a>
+                        <a href="#specificaties" class="btn btn-outline">Bekijk specs</a>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                        <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                        <circle cx="24" cy="24" r="2" fill="currentColor"/>
+                        <line x1="24" y1="2" x2="24" y2="10" stroke="currentColor" stroke-width="2"/>
+                        <line x1="24" y1="38" x2="24" y2="46" stroke="currentColor" stroke-width="2"/>
+                        <line x1="2" y1="24" x2="10" y2="24" stroke="currentColor" stroke-width="2"/>
+                        <line x1="38" y1="24" x2="46" y2="24" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <h3>Detectie & Tracking Platform</h3>
+                    <p>Geïntegreerd radar- en RF-detectiesysteem dat naadloos samenwerkt met onze interceptors. Van vroege waarschuwing tot engagement — één commandocentrum.</p>
+                    <ul class="feature-list">
+                        <li>360° RF-scanning</li>
+                        <li>Micro-doppler radarintegratie</li>
+                        <li>Realtime threat assessment</li>
+                        <li>STANAG-compatibel datalink</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag">C2-systeem</span>
+                        <span class="tag">Sensor Fusion</span>
+                    </div>
+                    <div class="card-buttons">
+                        <a href="#contact" class="btn btn-primary">Neem contact op</a>
+                        <a href="#specificaties" class="btn btn-outline">Bekijk specs</a>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="10" width="36" height="24" rx="3" stroke="currentColor" stroke-width="2.5"/>
+                        <line x1="6" y1="18" x2="42" y2="18" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="14" cy="26" r="2" fill="currentColor"/>
+                        <circle cx="22" cy="26" r="2" fill="currentColor"/>
+                        <line x1="16" y1="38" x2="32" y2="38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="20" y1="34" x2="20" y2="38" stroke="currentColor" stroke-width="2"/>
+                        <line x1="28" y1="34" x2="28" y2="38" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <h3>Training & Simulatie</h3>
+                    <p>Complete opleidingstrajecten voor FPV-piloten en commandovoerders. Van basis vliegvaardigheden tot tactische inzet in gesimuleerde gevechtsscenario's.</p>
+                    <ul class="feature-list">
+                        <li>FPV-pilotenopleiding (4 weken)</li>
+                        <li>Hardware-in-the-loop simulatie</li>
+                        <li>Tactisch scenario-ontwerp</li>
+                        <li>Jaarlijkse recertificering</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag">NLDA</span>
+                        <span class="tag">Opleiding & Training</span>
+                    </div>
+                    <div class="card-buttons">
+                        <a href="#contact" class="btn btn-primary">Neem contact op</a>
+                        <a href="#specificaties" class="btn btn-outline">Bekijk specs</a>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="service-card fade-up">
+                    <svg class="service-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 36V20l12-10 12 10v16a2 2 0 01-2 2H14a2 2 0 01-2-2z" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M20 38V28h8v10" stroke="currentColor" stroke-width="2.5"/>
+                        <circle cx="24" cy="22" r="3" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <h3>Basisbescherming & Inzet</h3>
+                    <p>Turnkey-oplossingen voor de bescherming van militaire installaties, havens en evenementen. Inclusief deployment, operators en logistieke ondersteuning.</p>
+                    <ul class="feature-list">
+                        <li>24/7 operationele paraatheid</li>
+                        <li>Mobiele commandopost</li>
+                        <li>Snelle deployment (< 30 min)</li>
+                        <li>Geïntegreerd met MALE-UAS</li>
+                    </ul>
+                    <div class="tag-row">
+                        <span class="tag">Force Protection</span>
+                        <span class="tag">VBSS</span>
+                    </div>
+                    <div class="card-buttons">
+                        <a href="#contact" class="btn btn-primary">Neem contact op</a>
+                        <a href="#specificaties" class="btn btn-outline">Bekijk specs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="section stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item fade-up">
+                    <h3>200+</h3>
+                    <p>Succesvolle onderscheppingen</p>
+                </div>
+                <div class="stat-item fade-up">
+                    <h3>&lt; 8s</h3>
+                    <p>Launch-to-intercept tijd</p>
+                </div>
+                <div class="stat-item fade-up">
+                    <h3>99.2%</h3>
+                    <p>Hit-ratio bij tests</p>
+                </div>
+                <div class="stat-item fade-up">
+                    <h3>3km</h3>
+                    <p>Effectief operatiebereik</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPECIALISATIES -->
+    <section class="section" id="specificaties">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Onze specialisaties</h2>
+                <p>Geïntegreerde technologie die de kloof dicht tussen detectie en neutralisatie van onbemande dreigingen in het moderne gevechtsbeeld.</p>
+            </div>
+            <div class="specs-grid">
+                <div class="spec-card fade-up">
+                    <svg class="spec-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 4l16 8v8c0 9.5-6.8 18.4-16 20C10.8 38.4 4 29.5 4 20v-8l16-8z" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                        <path d="M14 20l4 4 8-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>FPV Interceptor Ontwikkeling</h3>
+                    <p>Custom-built interceptordrones met carbon-fiber frames, high-thrust motoren en real-time video downlink voor precisie-onderschepping.</p>
+                </div>
+                <div class="spec-card fade-up">
+                    <svg class="spec-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                        <path d="M20 4a16 16 0 0116 16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4 4"/>
+                        <circle cx="20" cy="20" r="4" fill="currentColor"/>
+                    </svg>
+                    <h3>Sensor Integratie</h3>
+                    <p>Naadloze koppeling van radar, RF-detectie, EO/IR-camera's en akoestische sensoren tot één geïntegreerd luchtbeeld.</p>
+                </div>
+                <div class="spec-card fade-up">
+                    <svg class="spec-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="4" y="8" width="32" height="24" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                        <path d="M4 16h32" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="24" r="2" fill="currentColor"/>
+                        <circle cx="20" cy="24" r="2" fill="currentColor"/>
+                        <circle cx="28" cy="24" r="2" fill="currentColor"/>
+                    </svg>
+                    <h3>Command & Control</h3>
+                    <p>Intuïtief C2-platform voor het aansturen van meerdere interceptors tegelijkertijd, met threat-prioritering en geofencing.</p>
+                </div>
+                <div class="spec-card wide fade-up">
+                    <svg class="spec-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 28l6-8 6 4 6-10 6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <rect x="4" y="4" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                    </svg>
+                    <h3>AI & Autonome Navigatie</h3>
+                    <p>Machine learning-modellen voor doelclassificatie, padplanning en autonome onderschepping. Van menselijke operator tot AI-ondersteund engagement in GNSS-denied omgevingen.</p>
+                </div>
+                <div class="spec-card fade-up">
+                    <svg class="spec-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                        <path d="M20 10v10l7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    <h3>Onderhoud & Logistiek</h3>
+                    <p>Full-lifecycle support met voorraadmanagement, fieldservice en snelle reparatiecyclus voor maximale operationele beschikbaarheid.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMAGE BAND 2 -->
+    <div class="image-band-2"></div>
+
+    <!-- OVER ONS -->
+    <section class="section" id="over-ons">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Over Interceptor Aerospace</h2>
+            </div>
+            <div class="about-text fade-up">
+                <p>Interceptor Aerospace is een Nederlands defensiebedrijf gespecialiseerd in counter-UAS oplossingen. Ons team combineert diepgaande kennis van FPV-dronetechnologie met operationele ervaring vanuit de Nederlandse krijgsmacht.</p>
+                <p>Wij werken nauw samen met het Ministerie van Defensie, TNO en Europese NAVO-partners om de volgende generatie luchtverdedigingssystemen tegen onbemande dreigingen te ontwikkelen. Onze systemen worden in Nederland ontworpen, gebouwd en getest.</p>
+                <p>Van de kazernes in Oirschot tot missiegebieden wereldwijd — onze interceptors beschermen wat er toe doet.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTEN -->
+    <section class="section" id="projecten" style="background: var(--gray-100);">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2>Onze projecten</h2>
+                <p>Bewezen technologie in samenwerking met toonaangevende defensieorganisaties en kennisinstellingen.</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card fade-up">
+                    <div class="product-card-image">
+                        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 60V30l20-15 20 15v30H20z" stroke="currentColor" stroke-width="2" fill="none" opacity="0.3"/><path d="M34 60V44h12v16" stroke="currentColor" stroke-width="2" fill="none" opacity="0.3"/></svg>
+                    </div>
+                    <div class="product-card-body">
+                        <div class="nato-badge">NATO RESTRICTED</div>
+                        <h3>Project SHIELD</h3>
+                        <p>Bescherming van vliegbases tegen groepsdrone-aanvallen. Geïntegreerd met bestaande SHORAD-systemen van de Koninklijke Luchtmacht.</p>
+                    </div>
+                </div>
+                <div class="product-card fade-up">
+                    <div class="product-card-image">
+                        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="24" stroke="currentColor" stroke-width="2" fill="none" opacity="0.3"/><path d="M40 20v40M20 40h40" stroke="currentColor" stroke-width="1.5" opacity="0.3"/><circle cx="40" cy="40" r="8" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.3"/></svg>
+                    </div>
+                    <div class="product-card-body">
+                        <div class="nato-badge">PARTNERED</div>
+                        <h3>BENELUX C-UAS Trial</h3>
+                        <p>Gezamenlijke test met België en Luxemburg voor grensoverschrijdende counter-UAS capaciteit tijdens grootschalige NAVO-oefeningen.</p>
+                    </div>
+                </div>
+                <div class="product-card fade-up">
+                    <div class="product-card-image">
+                        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="24" width="48" height="32" rx="4" stroke="currentColor" stroke-width="2" fill="none" opacity="0.3"/><path d="M16 32h48" stroke="currentColor" stroke-width="1.5" opacity="0.3"/><circle cx="28" cy="44" r="3" fill="currentColor" opacity="0.2"/><circle cx="40" cy="44" r="3" fill="currentColor" opacity="0.2"/></svg>
+                    </div>
+                    <div class="product-card-body">
+                        <div class="nato-badge">TNO SAMENWERKING</div>
+                        <h3>AI Targeting Research</h3>
+                        <p>Onderzoeksproject met TNO voor autonome doelherkenning en -classificatie met behulp van edge-AI op embedded hardware.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <h2 class="fade-up">Klaar voor de volgende stap?</h2>
+            <p class="fade-up">Plan een vertrouwelijk gesprek met ons defensieteam en ontdek hoe onze interceptorsystemen uw luchtruimbeveiliging versterken.</p>
+            <div class="cta-buttons fade-up">
+                <a href="mailto:info@interceptor-aero.nl" class="btn btn-white">Plan een gesprek</a>
+                <a href="#projecten" class="btn btn-outline-light">Bekijk onze projecten</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">INTERCEPTOR</a>
+                    <p>Nederlands defensiebedrijf gespecialiseerd in FPV-onderscheppingsdrones en counter-UAS oplossingen. Bescherming van kritieke infrastructuur en militaire operaties.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Systemen</h4>
+                    <ul>
+                        <li><a href="#">Counter-UAS</a></li>
+                        <li><a href="#">Detectie & Tracking</a></li>
+                        <li><a href="#">Training & Simulatie</a></li>
+                        <li><a href="#">Basisbescherming</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Sectoren</h4>
+                    <ul>
+                        <li><a href="#">Koninklijke Landmacht</a></li>
+                        <li><a href="#">Koninklijke Luchtmacht</a></li>
+                        <li><a href="#">Koninklijke Marine</a></li>
+                        <li><a href="#">Koninklijke Marechaussee</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Bedrijf</h4>
+                    <ul>
+                        <li><a href="#">Over Interceptor</a></li>
+                        <li><a href="#">Onze projecten</a></li>
+                        <li><a href="#">Technologie</a></li>
+                        <li><a href="#">Vacatures</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">Interceptor Aerospace B.V.</a></li>
+                        <li><a href="mailto:info@interceptor-aero.nl">info@interceptor-aero.nl</a></li>
+                        <li style="margin-top: 16px;"><a href="#contact" class="btn btn-outline-light" style="padding: 8px 20px; font-size: 0.85rem;">Plan een gesprek</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 Interceptor Aerospace B.V. Alle rechten voorbehouden.</span>
+                <div>
+                    <a href="#">Privacy statement</a>
+                    <a href="#">Algemene voorwaarden</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCROLL ANIMATION -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Navbar shadow on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                navbar.style.boxShadow = '0 1px 20px rgba(0,0,0,0.06)';
+            } else {
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
